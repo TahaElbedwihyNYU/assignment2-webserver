@@ -59,7 +59,7 @@ def webServer(port=13331):
 
         # Fill in start
 
-      # connectionSocket.send(data)
+      connectionSocket.sendall(data)
 
         # Fill in end
         
