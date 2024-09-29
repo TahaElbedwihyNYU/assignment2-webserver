@@ -38,7 +38,8 @@ def webServer(port=13331):
       connectionSocket.send(b"HTTP/1.1 200 OK\r\n\r\n")
 
       #Content-Type is an example on how to send a header as bytes. There are more!
-      outputdata = b"Content-Type: text/html; charset=UTF-8\r\n\r\n" 
+      # Content-Type, Server, Connection
+      outputdata = b"Content-Type: text/html; charset=UTF-8; Server: SimplePythonServer; Connection: close\r\n\r\n" 
 
       #Note that a complete header must end with a blank line, creating the four-byte sequence "\r\n\r\n" Refer to https://w3.cs.jmu.edu/kirkpams/OpenCSF/Books/csf/html/TCPSockets.html
       connectionSocket.send(outputdata)
@@ -62,12 +63,12 @@ def webServer(port=13331):
       #Send everything as one send command, do not send one line/item at a time!
 
         # Fill in start
-
-      connectionSocket.sendall(f'b"{data}"')
+      bytes_data = str.encode(data)
+      connectionSocket.sendall(bytes_data)
 
         # Fill in end
         
-      connectionSocket.close() #closing the connection socket
+      # connectionSocket.close() #closing the connection socket
       
     except Exception as e:
       # Send response message for invalid request due to the file not being found (404)
@@ -83,6 +84,8 @@ def webServer(port=13331):
       #Fill in start
 
       #Fill in end
+    finally :
+      connectionSocket.close()
 
   # Commenting out the below (some use it for local testing). It is not required for Gradescope, and some students have moved it erroneously in the While loop. 
   # DO NOT PLACE ANYWHERE ELSE AND DO NOT UNCOMMENT WHEN SUBMITTING, YOU ARE GONNA HAVE A BAD TIME
