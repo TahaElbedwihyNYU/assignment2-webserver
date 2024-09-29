@@ -34,28 +34,35 @@ def webServer(port=13331):
 
       #This variable can store the headers you want to send for any valid or invalid request.   What header should be sent for a response that is ok?    
       #Fill in start 
-      
-      connectionSocket.send(b"HTTP/1.1 200 OK\r\n\r\n")
+      response = ''
+      # connectionSocket.send(b"HTTP/1.1 200 OK\r\n\r\n")
+      response += 'HTTP/1.1 200 OK'
+      response += '\r\n'
 
       #Content-Type is an example on how to send a header as bytes. There are more!
       # Content-Type, Server, Connection
-      outputdata = b"Content-Type: text/html; charset=UTF-8;\r\nServer: SimplePythonServer\r\nConnection: close\r\n\r\n" 
-
+      # outputdata = b"Content-Type: text/html; charset=UTF-8;\r\nServer: SimplePythonServer\r\nConnection: close\r\n\r\n" 
+      response += 'Content-Type: text/html; charset=UTF-8;\r\n'
+      response += 'Server: SimplePythonServer\r\n'
+      response += 'Connection: close\r\n'
+      response += '\r\n'
       #Note that a complete header must end with a blank line, creating the four-byte sequence "\r\n\r\n" Refer to https://w3.cs.jmu.edu/kirkpams/OpenCSF/Books/csf/html/TCPSockets.html
-      connectionSocket.send(outputdata)
+      # connectionSocket.send(outputdata)
 
       #Fill in end
 
-      data = ''
+      # data = ''
 
       for i in f: #for line in file
         # print(i)
         #Fill in start - 
         # append your html file contents #Fill in end 
-        data += i
-        data += '\r\n'
+        # data += i
+        # data += '\r\n'
+        response += i 
+        # response += '\r\n'
 
-      data += '\r\n'    
+      # data += '\r\n'    
 
             
       #Send the content of the requested file to the client (don't forget the headers you created)!
@@ -63,8 +70,8 @@ def webServer(port=13331):
       #Send everything as one send command, do not send one line/item at a time!
 
         # Fill in start
-      bytes_data = str.encode(data)
-      connectionSocket.sendall(bytes_data)
+      bytes_response = str.encode(response)
+      connectionSocket.sendall(bytes_response)
 
         # Fill in end
         
